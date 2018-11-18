@@ -1,6 +1,20 @@
 from models.CentroPoblado import CentroPoblado
 
-def leer(nombreArchivo,inicio,fin = 0):
+
+def leerArchivo(nombreArchivo):
+    datos = []
+    try:
+        archivo = open(nombreArchivo)
+        lineas = archivo.readlines()
+        for linea in lineas:
+            datos.append(linea.replace('\n',''))
+    except FileNotFoundError:
+        print("Archivo no encontrado")
+    finally:
+        archivo.close()
+        return datos
+
+def leerDataSet(nombreArchivo,inicio,fin = 0):
     centrosPoblados = []
     try:
         archivo = open(nombreArchivo)
@@ -30,7 +44,7 @@ def leer(nombreArchivo,inicio,fin = 0):
         return centrosPoblados
 
 if __name__ == "__main__":
-    centrosPoblados = leer("dataset.csv",1,100)
+    centrosPoblados = leerDataSet("dataset.csv",1)
 
     for cep in centrosPoblados:
         print(cep)
