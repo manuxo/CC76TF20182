@@ -47,6 +47,7 @@ def leerDataSet(nombreArchivo,inicio,fin = 0):
         archivo.close()
         return centrosPoblados
 
+
 if __name__ == "__main__":
     centrosPoblados = leerDataSet("dataset.csv",1)
     i = 0
