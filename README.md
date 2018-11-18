@@ -66,7 +66,110 @@ Como se explicó al inicio este método me permite unir 2 componentes conexas, e
 
 Primeramente ordenaremos las aristas del grafo por su peso de menor a mayor. Mediante la técnica greedy Kruskal intentara unir cada arista siempre y cuando no se forme un ciclo, ello se realizará mediante los metodos Union-Find. Como hemos ordenado las aristas por peso comenzaremos con la arista de menor peso, si los vértices que contienen dicha arista no están en la misma componente conexa  entonces los unimos para formar una sola componente mediante Union.
 
-### Bibliografia:
+## Experimentación
+
+### Solución 1: Aplicando el algoritmo Kruskal
+
+Para esta solución utilizaremos el algoritmo de kruskal para hallar árboles de expansión mínima. En primer lugar, se obtendrán los datos de todos los centros poblados desde un archivo con extensión csv. Para ello definimos el siguiente modelo:
+```python 
+	#Clase CentroPoblado
+	class  CentroPoblado:
+		def  __init__(self,codigo,nombre,departamento,provincia,distrito,capital,coordX, coordY):
+			self.codigo = codigo
+			self.nombre = nombre
+			self.departamento = departamento
+			self.provincia = provincia
+			self.distrito = distrito
+			self.capital = capital
+			self.coordX = coordX
+			self.coordY = coordY
+		def  __str__(self):
+			return  "%s D: %s P: %s D: %s Cap: %d Cod: %s X: %f Y: %f"  % (self.nombre, self.departamento, self.provincia, self.distrito, self.capital, self.codigo,self.coordX,self.coordY)
+```
+Luego, definimos una función para leer el dataset:
+```python
+	def  leerDataSet(nombreArchivo,inicio,fin  =  0):
+		centrosPoblados = []
+		try:
+			archivo =  open(nombreArchivo)
+			lineas = archivo.readlines()
+			if fin !=  0:
+				lineas = lineas[inicio:(fin+1)]
+			else:
+				lineas = lineas[inicio:]
+			registros = []
+			for linea in lineas:
+				aux = linea.replace('\n','')
+				if  len(aux.split(',')) ==  18: #valida si el registro tiene 18 columnas
+					registros.append(aux)
+			print(len(registros))
+			for registro in registros:
+				datos = registro.split(',')
+				departamento,provincia,distrito,codigo,nombre = datos[1:6]
+				capital =  int(datos[7])
+				coordX,coordY = datos[15:17]
+				coordX =  float(coordX)
+				coordY =  float(coordY)
+				centrosPoblados.append(CentroPoblado(codigo,nombre,departamento,provincia,distrito,capital,coordX,coordY))
+		except  FileNotFoundError:
+			print("Archivo no encontrado.")
+		finally:
+			archivo.close()
+			return centrosPoblados
+ ```
+Implementamos el algoritmo de Kruskal en python:
+```python
+def  kruskal(G,id):
+	aristas = []
+	resultado = []
+	for arista in G:
+		costo,nodo,vecino = arista
+		hq.heappush(aristas,(costo,nodo,vecino))
+	while  len(aristas):
+		costo,u,v = hq.heappop(aristas)
+		pu = find(id,u)
+		pv = find(id,v)
+		if pu != pv:
+			resultado.append((costo,u,v))
+			union(id,pu,pv)
+	return resultado
+ ```
+Finalmente, aplicamos el algoritmo para una muestra:
+``` python
+import matplotlib.pyplot as plt
+from Leer import leerDataSet,leerArchivo
+from generarGrafo import generarGrafo
+centrosPoblados = leerDataSet("dataset.csv",1)
+tipoMuestra = {
+'RESTANTES':0,
+'DEPARTAMENTALES':1,
+'PROVINCIALES':2,
+'DISTRITALES':3
+}
+muestra = [] #lista centros poblados
+id  = {}
+for cep in centrosPoblados:
+	if cep.capital == tipoMuestra['DEPARTAMENTALES']:
+		id[cep.codigo] = cep.codigo
+		muestra.append(cep)
+G = generarGrafo(muestra)
+arbolExpMin = kruskal(G,id)
+print(arbolExpMin)
+```
+
+##### Resultados
+Estos fueron los resultados obtenidos durante la experimentación:
+
+ - [x] Aplicar su solución a las 25 capitales departamentales.
+ ![Prueba en departamentales](https://i.imgur.com/q7ri8Ki.png)
+ - [x] Aplicar su solución a las 171 capitales provinciales
+ ![Prueba en provinciales](https://i.imgur.com/8s9P4wu.png)
+ - [x] Aplicar su solución a las 1’678 capitales distritales.
+ ![Prueba en distritales](https://i.imgur.com/Q0S16t3.png)
+ - [ ] Aplicar su solución a los 143’351 centros poblados restantes
+No fue posible aplicar este algoritmo en un tiempo razonable para dicha muestra.
+
+## Bibliografia:
 
 https://sites.google.com/site/complejidadalgoritmicaes/prim
 
