@@ -9,13 +9,8 @@ def find(id,i):
 def union(id,a,b):
     pa = find(id,a)
     pb = find(id,b)
-    rank_a = id.count(pa)
-    rank_b = id.count(pb)
     if pa != pb:
-        if rank_a > rank_b:
-            id[b] = pa
-        else:
-            id[a] = pb
+        id[b] = pa
 
 if __name__=="__main__":
     n = int(input("Ingrese n: "))
