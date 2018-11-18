@@ -53,7 +53,7 @@ if __name__ == "__main__":
     parents, costo = prim(G)
     
     
-    """"
+""""
 G = [
         [(1,2)],
         [(2,10)],
@@ -62,7 +62,7 @@ G = [
         [(5,1)],
         [(0,1)]
     ]
-""""
+"""
     
     print(G)
     print(parents)
