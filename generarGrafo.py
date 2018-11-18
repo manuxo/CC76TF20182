@@ -12,7 +12,7 @@ def generarGrafo(centrosPoblados):
     for cep in centrosPoblados:
         copia = centrosPoblados[:] # genera una copia de todos los centros poblados
         copia.remove(cep) #removemos el cep seleccionado para no generar un camino al mismo punto
-        destinosPorCep = random.randint(3,10) # seleccionamos entre 3 y 10 destinos por cada centro poblado
+        destinosPorCep = random.randint(3,5) # seleccionamos entre 3 y 5 destinos por cada centro poblado
         for _ in range(destinosPorCep):
             destino = random.choice(copia) #seleccionamos un destino al azar
             copia.remove(destino) #removemos el destino para que no se repita
