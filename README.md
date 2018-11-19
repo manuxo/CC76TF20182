@@ -171,8 +171,10 @@ No fue posible aplicar este algoritmo en un tiempo razonable para dicha muestra.
 
 ## Bibliografia:
 
-https://sites.google.com/site/complejidadalgoritmicaes/prim
+Complejidad Algoritmica(2016) Algoritmo de Prim (Recuperado de: https://sites.google.com/site/complejidadalgoritmicaes/prim) 
+(fecha de consulta: 17 de noviembre del 2017)
 
-https://jariasf.wordpress.com/2012/04/02/disjoint-set-union-find/
+Algorithms and more(2012) Disjoint-set: Union Find (Recuperado de: https://jariasf.wordpress.com/2012/04/02/disjoint-set-union-find/) 
+(fecha de consulta: 17 de noviembre del 2017)
 
-https://jariasf.wordpress.com/2012/04/19/arbol-de-expansion-minima-algoritmo-de-kruskal/
+Algorithms and more(2012) Arbol de expansion minima: Algoritmo de Kruskal (Recuperado de: https://jariasf.wordpress.com/2012/04/19/arbol-de-expansion-minima-algoritmo-de-kruskal/) (fecha de consulta: 17 de noviembre del 2017)
