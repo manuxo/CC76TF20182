@@ -190,6 +190,35 @@ Estos fueron los resultados obtenidos durante la experimentación:
  - [ ] Aplicar su solución a los 143’351 centros poblados restantes
 No fue posible aplicar este algoritmo en un tiempo razonable para dicha muestra.
 
+#### Solución 2: Aplicando el algoritmo de Prim
+
+Utilice el algoritmo....
+
+Primero hice esto:
+```python 
+	Inserta tu codigo aca
+	def funcion(parametro):
+		bla bla bla
+```
+Luego hice esto:
+```python 
+	Inserta tu codigo aca
+	def funcion(parametro):
+		bla bla bla
+```
+
+##### Resultados
+Estos fueron los resultados obtenidos durante la experimentación:
+
+ - [x] Aplicar su solución a las 25 capitales departamentales.
+ ![Prueba en departamentales](https://i.imgur.com/CTsenrt.png)
+ - [x] Aplicar su solución a las 171 capitales provinciales
+ ![Prueba en provinciales](https://i.imgur.com/ygLlsv5.png)
+ - [x] Aplicar su solución a las 1’678 capitales distritales.
+ ![Prueba en distritales](https://i.imgur.com/g3fTA3D.png)
+ - [ ] Aplicar su solución a los 143’351 centros poblados restantes
+No fue posible aplicar este algoritmo en un tiempo razonable para dicha muestra.
+
 ### Algoritmo Floyd-Warshall
 
 Fue descrito por primera vez por Bernard Roy en 1959, se trata de un algoritmo de análisis sobre grafos para encontrar el camino minimo en grafos dirigidos. Este algoritmo encuentra el mejor camino de todos los pares de vertices en una sola ejecución y es un claro ejemplo de programación dinamica.
