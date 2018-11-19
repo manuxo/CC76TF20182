@@ -103,6 +103,35 @@ log*n E O(logn), pero logn ~ O(log*n).
 
 Por lo tanto podemos concluir que la complejidad del algoritmo de Kruskal es O(a*log(n)). 
 
+
+
+### Algoritmo Floyd-Warshall
+
+Fue descrito por primera vez por Bernard Roy en 1959, se trata de un algoritmo de análisis sobre grafos para encontrar el camino minimo en grafos dirigidos. Este algoritmo encuentra el mejor camino de todos los pares de vertices en una sola ejecución y es un claro ejemplo de programación dinamica.
+
+Este algoritmo a su vez se trata de la mezcla de dos distintos algoritmos, los cuales son indicados en su nombre compuesto; así pues, para entender aún más el funcionamiento de este algoritmo se presentará una breve explicación de los algoritmos que lo componen:
+
+### Algoritmo de Warshall
+
+Es un algoritmo booleano, ya que hace uso de una matriz compuesta de 0 e 1, los cuales indican que hay o no correspondencia en el grafo y, a travez de este algoritmo se obtiene una matriz transitiva la cual muestra si es que dos nodos se hallan conectados mediante una union indirecta.
+
+### Algoritmo de Floyd
+
+Es bastante similar al algoritmo usado por Warshall, pero este permite el uso de grafos ponderados, permitiendo que la "flecha" que indica la union entre dos nodos tenga valores enteros o infinito, siendo infinito un indicador de que esos nodos no poseen una union directa entre ellos. De esta forma, este algoritmo es perfectamente aplicable para las distancias almacenadas entre cada par de nodos que se encuentren conectados.
+
+### Funcionamiento Floyd-Warshall
+
+Este algoritmo compara todos los posibles caminos entre cada par de vertices que se encuentra en el grafo en tan solo V^3 comparaciones, lo cual es logrado gracias a que poco a poco hace una estimación del mejor camino entre dos vértices, hasta que se sabe la estimación optima.
+
+Se define un grafo G con vertices V numerados de 1 a N, y una funcion CaminoMinimo(i, j, k) que devuelve el camino minimo de i a j (los cuales conforman V) utilizando solo los vertices de 1 a k como puntos intermedios en el camino. Dada esta función se procede a calcular el camino minimo de i a j utilizando solo los vertices de 1 hasta a k+1.
+
+Una vez definido esto, se pueden presentar dos posibles situaciones; el camino minimo se puede hallar directamente mediante la funcion CaminoMinimo(i, j, k) y se halla comprendido entre los vertices 1 a k+1; o se encuentra como el camino minimo de k+1 a j, por lo cual se debiesen de concatenar dos caminos minimos para formar el más optimo.
+
+### Complejidad de Floyd-Warshall
+
+La complejidad de este algoritmo es O(n^3) . El algoritmo resuelve eficientemente la búsqueda de todos los caminos más cortos entre cualesquiera nodos. Sin embargo, la busqueda se vuelve lenta.
+
+
 ## Experimentación
 
 ### Solución 1: Aplicando el algoritmo Kruskal
@@ -147,7 +176,7 @@ Luego, definimos una función para leer el dataset:
 				coordX,coordY = datos[15:17]
 				coordX =  float(coordX)
 				coordY =  float(coordY)
-				centrosPoblados.append(CentroPoblado(codigo,nombre,departamento,provincia,distrito,capital,coordX,coordY))
+					centrosPoblados.append(CentroPoblado(codigo,nombre,departamento,provincia,distrito,capital,coordX,coordY))
 		except  FileNotFoundError:
 			print("Archivo no encontrado.")
 		finally:
@@ -274,32 +303,109 @@ Estos fueron los resultados obtenidos durante la experimentación:
  - [ ] Aplicar su solución a los 143’351 centros poblados restantes
 No fue posible aplicar este algoritmo en un tiempo razonable para dicha muestra.
 
-### Algoritmo Floyd-Warshall
+### Solución 3: Aplicando el algoritmo Floyd-Warshall
 
-Fue descrito por primera vez por Bernard Roy en 1959, se trata de un algoritmo de análisis sobre grafos para encontrar el camino minimo en grafos dirigidos. Este algoritmo encuentra el mejor camino de todos los pares de vertices en una sola ejecución y es un claro ejemplo de programación dinamica.
+Para esta solución se implementará una matriz que almacene todos los mejores caminos para llegar a todos los nodos con que se cuenta. En primer lugar, se generá un grafo común utilizando el data set creado anteriormente:
 
-Este algoritmo a su vez se trata de la mezcla de dos distintos algoritmos, los cuales son indicados en su nombre compuesto; así pues, para entender aún más el funcionamiento de este algoritmo se presentará una breve explicación de los algoritmos que lo componen:
+ ```python
+ def generarGrafo(centrosPoblados):
+    grafo = []
+    
+    for cep in centrosPoblados:
+        copia = centrosPoblados[:] # genera una copia de todos los centros poblados
+        copia.remove(cep) #removemos el cep seleccionado para no generar un camino al mismo punto
+        destinosPorCep = random.randint(3,5) # seleccionamos entre 3 y 5 destinos por cada centro poblado
+        for _ in range(destinosPorCep):
+            destino = random.choice(copia) #seleccionamos un destino al azar
+            copia.remove(destino) #removemos el destino para que no se repita
+            #Generamos una nueva arista
+            distancia = calcularDistancia(cep,destino)
+            arista = (distancia,cep.codigo,destino.codigo)
+            grafo.append(arista)
+    return grafo
+  ```
+  
+Ya que se va a trabajar con matrices, este grafo generado se ve cambiado para fines de mejor manejo, reemplazando los codigos reales de los nodos por numeros mas pequeños desde 0 a n-1 nodos:
 
-### Algoritmo de Warshall
+```python
+def generarGrafoFloyd(muestra):
+    G=generarGrafo(muestra)
+    n=len(G)
+    grafo=[[] for _ in range(n)]
+    
+    i=0
+    r=[]
+    for _, nodo, _ in G:
+        r.append(int(nodo))
+        
+    norep=repetidos(r)
 
-Es un algoritmo booleano, ya que hace uso de una matriz compuesta de 0 e 1, los cuales indican que hay o no correspondencia en el grafo y, a travez de este algoritmo se obtiene una matriz transitiva la cual muestra si es que dos nodos se hallan conectados mediante una union indirecta.
 
-### Algoritmo de Floyd
+    uCodigos=[]
+    for nodo in norep:
+        uCodigos.append((i, nodo))
+        i=i+1
 
-Es bastante similar al algoritmo usado por Warshall, pero este permite el uso de grafos ponderados, permitiendo que la "flecha" que indica la union entre dos nodos tenga valores enteros o infinito, siendo infinito un indicador de que esos nodos no poseen una union directa entre ellos. De esta forma, este algoritmo es perfectamente aplicable para las distancias almacenadas entre cada par de nodos que se encuentren conectados.
+    for u in range(n):
+        distancias=[x[0] for x in G]
+        nodos=[x[1] for x in G]
+        vecinos=[x[2] for x in G]
+        nd=buscar(uCodigos, int(nodos[u]))
+        v=buscar(uCodigos, int(vecinos[u]))
+        if distancias[u]==None:
+            distancias[u]=0
+        grafo[u].append((distancias[u], nd, v))
+        
+    return grafo, uCodigos
+```
 
-### Funcionamiento Floyd-Warshall
+De esta funcion se obtiene un nuevo grafo que ya puede ser procesado por nuestro algoritmo Floyd-Warshall y un arreglo que contiene los codigos reales y sus números ahora asignados. A continuación se utiliza el algoritmo de Floyd-Warshall para obtener la matriz con todos los caminos posibles:
 
-Este algoritmo compara todos los posibles caminos entre cada par de vertices que se encuentra en el grafo en tan solo V^3 comparaciones, lo cual es logrado gracias a que poco a poco hace una estimación del mejor camino entre dos vértices, hasta que se sabe la estimación optima.
+```python
+def floydWarshall(G, tamano):
+    n=len(G)
+    maCostos = [[math.inf]*tamano for _ in range(tamano)]
+    maPadres = [[-1]*tamano for _ in range(tamano)]
+    for nodos in range(n):
+        for distancia, nodo, vecino in G[nodos]:
+            maCostos[nodo][nodo] = 0
+            maCostos[nodo][vecino] = distancia
+            maPadres[nodo][vecino] = nodo
+            
+    for k in range(tamano):
+        for i in range(tamano):
+            for j in range(tamano):
+                pesoAcumulado = maCostos[i][k] + maCostos[k][j]
+                if maCostos[i][j] > pesoAcumulado:
+                    maCostos[i][j] = pesoAcumulado
+                    maPadres[i][j] = k
+           
+    return maPadres
+```
 
-Se define un grafo G con vertices V numerados de 1 a N, y una funcion CaminoMinimo(i, j, k) que devuelve el camino minimo de i a j (los cuales conforman V) utilizando solo los vertices de 1 a k como puntos intermedios en el camino. Dada esta función se procede a calcular el camino minimo de i a j utilizando solo los vertices de 1 hasta a k+1.
+Finalmente se aplica el algoritmo, obteniendo así la matriz deseada con los resultados:
 
-Una vez definido esto, se pueden presentar dos posibles situaciones; el camino minimo se puede hallar directamente mediante la funcion CaminoMinimo(i, j, k) y se halla comprendido entre los vertices 1 a k+1; o se encuentra como el camino minimo de k+1 a j, por lo cual se debiesen de concatenar dos caminos minimos para formar el más optimo.
-
-### Complejidad de Floyd-Warshall
-
-La complejidad de este algoritmo es O(n^3) . El algoritmo resuelve eficientemente la búsqueda de todos los caminos más cortos entre cualesquiera nodos. Sin embargo, la busqueda se vuelve lento
-
+```python
+if __name__ == "__main__":
+    centrosPoblados = leerDataSet("dataset.csv",1)
+    tipoMuestra = {
+        'RESTANTES':0,
+        'DEPARTAMENTALES':1,
+        'PROVINCIALES':2,
+        'DISTRITALES':3
+    }
+    muestra = [] #lista centros poblados
+    id = {}
+    for cep in centrosPoblados:
+        if cep.capital == tipoMuestra['DEPARTAMENTALES']: #es capital departamental
+            id[cep.codigo] = cep.codigo
+            muestra.append(cep)
+            
+    G, uCodigos = generarGrafoFloyd(muestra)
+    tamano=len(muestra)
+    caminoFloyd = floydWarshall(G, tamano)
+    print(caminoFloyd)
+```
 ## Conclusiones
 
 Finalmente, se puede concluir que al momento de la ejecucion de los algoritmos Prim y Kruskal:
@@ -308,7 +414,6 @@ Finalmente, se puede concluir que al momento de la ejecucion de los algoritmos P
 
 • Si se ejecutara el algoritmo para las muestras restantes, es decir para todos los centros poblados, se mostraria los resultados adecuados. Sin embargo, el tiempo de ejecucion seria muy extenso, lo cual no es lo mas optimo.
 	
-
 ## Bibliografia:
 
 Complejidad Algoritmica(2016) Algoritmo de Prim (Recuperado de: https://sites.google.com/site/complejidadalgoritmicaes/prim) 
