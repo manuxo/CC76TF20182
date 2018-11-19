@@ -139,14 +139,12 @@ def generarGrafoFloyd(muestra):
 
 if __name__ == "__main__":
     centrosPoblados = leerDataSet("dataset.csv",1)
-
     tipoMuestra = {
         'RESTANTES':0,
         'DEPARTAMENTALES':1,
         'PROVINCIALES':2,
         'DISTRITALES':3
-}
-    
+    }
     muestra = [] #lista centros poblados
     id = {}
     for cep in centrosPoblados:
@@ -156,8 +154,7 @@ if __name__ == "__main__":
     G, uCodigos = generarGrafoFloyd(muestra)
     #print(G)
     caminoFloyd = floydWarshall(G)
-    #print(caminoFloyd)
-    """
+    print(caminoFloyd)
     #Config mapa
     plt.figure(figsize=(15,5))
     plt.title("Mapa")
@@ -170,6 +167,7 @@ if __name__ == "__main__":
         x.append(cep.coordX)
         y.append(cep.coordY)
     plt.plot(x,y,'ro')
+    """
     def buscarCentroPoblado(codigo):
         for cep in centrosPoblados:
             if cep.codigo == codigo:
@@ -185,24 +183,17 @@ if __name__ == "__main__":
             y = [o.coordY,d.coordY]
             plt.plot(x,y,color=color,marker="8",markerEdgeColor="black")
   
-    
-
-
-
-
 
     #Pintar grafo
         pintarAristas(G,"blue")
         #Pintar arbol de expansion minima
         pintarAristas(arbolExpMin,"white")
-        plt.show()
-
-
     """
     #print(G)
     #print(caminoFloyd)
     destinos=camino(caminoFloyd, 1, 2)
-    #print(destinos)
+    print(destinos)
+    plt.show()
 
     
    
