@@ -37,7 +37,6 @@ def creandoArbol(maPadres, uCodigos, inicio, fin):
     resultado=[]
     camino=[]
     construirCamino(maPadres, inicio, fin, camino)
-    print(camino)
     n=len(camino)
     primerNodo=-1
     for u in range(n):
@@ -45,9 +44,9 @@ def creandoArbol(maPadres, uCodigos, inicio, fin):
         if u==0: primerNodo=nodo
         if u+1!=n:
             vecino=transformar(uCodigos, camino[u+1])
-            resultado.append((0,nodo,vecino))
+            resultado.append((0,str(nodo),str(vecino)))
         else:
-            resultado.append((0,nodo,primerNodo))
+            resultado.append((0,str(nodo),str(primerNodo)))
             
     return resultado
 
@@ -56,6 +55,8 @@ def floydWarshall(G, tamano):
     n=len(G)
     maCostos = [[math.inf]*tamano for _ in range(tamano)]
     maPadres = [[-1]*tamano for _ in range(tamano)]
+    visitados=[False]*tamano
+    dist=[[math.inf]*tamano for _ in range(tamano)]
     for nodos in range(n):
         for distancia, nodo, vecino in G[nodos]:
             maCostos[nodo][nodo] = 0
@@ -69,6 +70,15 @@ def floydWarshall(G, tamano):
                 if maCostos[i][j] > pesoAcumulado:
                     maCostos[i][j] = pesoAcumulado
                     maPadres[i][j] = k
+    """
+    for i in range(tamano):              
+        if not visitados[i]:
+            visitados[i]=True
+            for j in range(tamano):
+                if not visitados[j] and maCostos[i][j]<dist[i][j]:
+                    maPadres[i][j]=i
+    """                
+    
            
     return maPadres
 
@@ -139,7 +149,7 @@ if __name__ == "__main__":
     muestra = [] #lista centros poblados
     id = {}
     for cep in centrosPoblados:
-        if cep.capital == tipoMuestra['DEPARTAMENTALES']: #es capital departamental
+        if cep.capital == tipoMuestra['PROVINCIALES']: #es capital departamental
             id[cep.codigo] = cep.codigo
             muestra.append(cep)
             
@@ -154,7 +164,7 @@ if __name__ == "__main__":
     #camino=[]
     #construirCamino(caminoFloyd, 0, 23,camino)
     
-    arbol=creandoArbol(caminoFloyd, uCodigos, 0, 3)
+    arbol=creandoArbol(caminoFloyd, uCodigos, 0, 150)
     #print(arbol)
 
 
@@ -180,6 +190,7 @@ if __name__ == "__main__":
 
     def pintarAristas(aristas,color):
         for arista in aristas:
+            print(arista)
             _,origen,destino = arista
             o = buscarCentroPoblado(origen)
             d = buscarCentroPoblado(destino)
@@ -188,10 +199,10 @@ if __name__ == "__main__":
                 y = [o.coordY,d.coordY]
                 plt.plot(x,y,color=color,marker="8",markerEdgeColor="black")
 
+
     #Pintar grafo
     pintarAristas(Gmapa,"blue")
     #Pintar arbol de expansion minima
     pintarAristas(arbol,"white")
     plt.show()
     
-   
