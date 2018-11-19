@@ -39,6 +39,9 @@ El resultado de ejecutar el algoritmo de Prim es un arbol de expansion minima, d
 
 #### Complejidad
 
+El algoritmo de Prim puede ver medida su complejidad algoritmica según su complejidad temporal como:
+
+-O (n^2). Siendo n el número de vértices del grafo.
 
 
 ### Algoritmo Kruskal
@@ -169,6 +172,28 @@ Estos fueron los resultados obtenidos durante la experimentación:
  - [ ] Aplicar su solución a los 143’351 centros poblados restantes
 No fue posible aplicar este algoritmo en un tiempo razonable para dicha muestra.
 
+### Algoritmo Floyd-Warshall
+
+Fue descrito por primera vez por Bernard Roy en 1959, se trata de un algoritmo de análisis sobre grafos para encontrar el camino minimo en grafos dirigidos. Este algoritmo encuentra el mejor camino de todos los pares de vertices en una sola ejecución y es un claro ejemplo de programación dinamica.
+
+Este algoritmo a su vez se trata de la mezcla de dos distintos algoritmos, los cuales son indicados en su nombre compuesto; así pues, para entender aún más el funcionamiento de este algoritmo se presentará una breve explicación de los algoritmos que lo componen:
+
+### Algoritmo de Warshall
+
+Es un algoritmo booleano, ya que hace uso de una matriz compuesta de 0 e 1, los cuales indican que hay o no correspondencia en el grafo y, a travez de este algoritmo se obtiene una matriz transitiva la cual muestra si es que dos nodos se hallan conectados mediante una union indirecta.
+
+### Algoritmo de Floyd
+
+Es bastante similar al algoritmo usado por Warshall, pero este permite el uso de grafos ponderados, permitiendo que la "flecha" que indica la union entre dos nodos tenga valores enteros o infinito, siendo infinito un indicador de que esos nodos no poseen una union directa entre ellos. De esta forma, este algoritmo es perfectamente aplicable para las distancias almacenadas entre cada par de nodos que se encuentren conectados.
+
+### Funcionamiento Floyd-Warshall
+
+Este algoritmo compara todos los posibles caminos entre cada par de vertices que se encuentra en el grafo en tan solo V^3 comparaciones, lo cual es logrado gracias a que poco a poco hace una estimación del mejor camino entre dos vértices, hasta que se sabe la estimación optima.
+
+Se define un grafo G con vertices V numerados de 1 a N, y una funcion CaminoMinimo(i, j, k) que devuelve el camino minimo de i a j (los cuales conforman V) utilizando solo los vertices de 1 a k como puntos intermedios en el camino. Dada esta función se procede a calcular el camino minimo de i a j utilizando solo los vertices de 1 hasta a k+1.
+
+Una vez definido esto, se pueden presentar dos posibles situaciones; el camino minimo se puede hallar directamente mediante la funcion CaminoMinimo(i, j, k) y se halla comprendido entre los vertices 1 a k+1; o se encuentra como el camino minimo de k+1 a j, por lo cual se debiesen de concatenar dos caminos minimos para formar el más optimo.
+
 ## Bibliografia:
 
 Complejidad Algoritmica(2016) Algoritmo de Prim (Recuperado de: https://sites.google.com/site/complejidadalgoritmicaes/prim) 
@@ -178,3 +203,11 @@ Algorithms and more(2012) Disjoint-set: Union Find (Recuperado de: https://jaria
 (fecha de consulta: 17 de noviembre del 2017)
 
 Algorithms and more(2012) Arbol de expansion minima: Algoritmo de Kruskal (Recuperado de: https://jariasf.wordpress.com/2012/04/19/arbol-de-expansion-minima-algoritmo-de-kruskal/) (fecha de consulta: 17 de noviembre del 2017)
+
+Cubana, E. Floyd-Warshall . Obtenido de https://www.ecured.cu/Floyd-Warshall (fecha de consulta: 18 de noviembre de 2018)
+
+II, E. d. Algoritmo de Floyd-Warshall. Obtenido de https://estructurasite.wordpress.com/algortimo-de-floyd-warshall/ (fecha de consulta: 18 de noviembre de 2018)
+
+Wikipedia. Algoritmo de Floyd-Warshall. Obtenido de https://es.wikipedia.org/wiki/Algoritmo_de_Floyd-Warshall (fecha de consulta: 18 de noviembre de 2018)
+
+
