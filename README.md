@@ -39,9 +39,9 @@ El resultado de ejecutar el algoritmo de Prim es un arbol de expansion minima, d
 
 #### Complejidad
 
-El algoritmo de Prim puede ver medida su complejidad algoritmica según su complejidad temporal como:
+El bucle principal se. ejecuta n- 1 veces, en cada iteración cada bucle interior toma O(n), por lo tanto el tiempo de ejecución del algoritmo de PRIM toma O(n2 ) . 
 
--O (n^2). Siendo n el número de vértices del grafo.
+
 
 
 ### Algoritmo Kruskal
@@ -68,6 +68,24 @@ Como se explicó al inicio este método me permite unir 2 componentes conexas, e
 #### Funcionamiento Kruskal
 
 Primeramente ordenaremos las aristas del grafo por su peso de menor a mayor. Mediante la técnica greedy Kruskal intentara unir cada arista siempre y cuando no se forme un ciclo, ello se realizará mediante los metodos Union-Find. Como hemos ordenado las aristas por peso comenzaremos con la arista de menor peso, si los vértices que contienen dicha arista no están en la misma componente conexa  entonces los unimos para formar una sola componente mediante Union.
+
+#### Complejidad
+
+La complejidad se puede analizar contemplando lo siguiente:
+
+• Se tiene una complejidad de O(aloga) para ordenar los arcos, el cual es equivalente a O(a*log(a)), como n- 1 <=  a <= n(n- 1)/2
+
+• Se tiene una complejidad de O( n) al inicializar los n conjuntos disjuntos
+
+• Se tiene una complejidad de 0((2a- 1)log*n para todas las búsquedas
+
+Considerando que:
+
+K llamadas a operaciones buscar el líder del conjunto que contiene a un vértice de conjuntos disjuntos den elementos lleva un tiempo de O(Klog*n).
+
+log*n E O(logn), pero logn ~ O(log*n).
+
+Por lo tanto podemos concluir que la complejidad del algoritmo de Kruskal es O(a*log(n)). 
 
 ## Experimentación
 
@@ -194,6 +212,10 @@ Se define un grafo G con vertices V numerados de 1 a N, y una funcion CaminoMini
 
 Una vez definido esto, se pueden presentar dos posibles situaciones; el camino minimo se puede hallar directamente mediante la funcion CaminoMinimo(i, j, k) y se halla comprendido entre los vertices 1 a k+1; o se encuentra como el camino minimo de k+1 a j, por lo cual se debiesen de concatenar dos caminos minimos para formar el más optimo.
 
+### Complejidad de Floyd-Warshall
+
+La complejidad de este algoritmo es O(n^3) . El algoritmo resuelve eficientemente la búsqueda de todos los caminos más cortos entre cualesquiera nodos. Sin embargo, la busqueda se vuelve lento
+
 ## Bibliografia:
 
 Complejidad Algoritmica(2016) Algoritmo de Prim (Recuperado de: https://sites.google.com/site/complejidadalgoritmicaes/prim) 
@@ -210,4 +232,8 @@ II, E. d. Algoritmo de Floyd-Warshall. Obtenido de https://estructurasite.wordpr
 
 Wikipedia. Algoritmo de Floyd-Warshall. Obtenido de https://es.wikipedia.org/wiki/Algoritmo_de_Floyd-Warshall (fecha de consulta: 18 de noviembre de 2018)
 
+Tocto, P (2012) Comparacion algoritmo Prim y Kruskal(Recuperado de: http://cybertesis.uni.edu.pe/bitstream/uni/3416/1/tocto_ip.pdf)
+(fecha de consulta: 18 de noviembre de 2018)
 
+Herrera, S.(2014) Eficiencia algorítmica en aplicaciones de grafos orientadas
+a redes GMPLS (Recuperado de: http://www.scielo.org.co/pdf/rfing/v23n36/v23n36a09.pdf) (fecha de consulta: 18 de noviembre de 2018)
