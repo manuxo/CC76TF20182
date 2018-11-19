@@ -10,4 +10,4 @@ class CentroPoblado:
         self.coordY = coordY
     def __str__(self):
         return "%s D: %s P: %s D: %s Cap: %d Cod: %s  X: %f Y: %f" % (self.nombre, self.departamento, self.provincia, self.distrito, self.capital, self.codigo,self.coordX,self.coordY)
-        
+       
