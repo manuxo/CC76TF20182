@@ -1,6 +1,14 @@
 # CC76TF20182
 Trabajo final para el curso de Complejidad Algorítmica. UPC - Universidad Peruana de Ciencias Aplicadas
 
+Integrantes: 
+
+• Alvarado Estanga, Manuel
+
+• Bernal Marchena, Luis Angel
+
+• Galarza Rosales, Pablo J.
+
 ## Introducción
 A lo largo de la existencia de las computadoras, se ha considerado a estas como herramientas de las cuales nos podemos valer para facilitar nuestras actividades. Así, se ha pensado que las computadoras nos pueden ayudar a resolver todos nuestros problemas y que poseen más poder para procesar datos que nosotros. Es raro pensar en que las computadoras poseen limites en sus facultades de cálculo, ya que muy pocas veces nos encontramos ante tales limites; de hecho, probablemente el usuario promedio no tenga que lidiar nunca en su vida con ningún problema que requiera llevar el poder de procesamiento de la computadora hasta casi el límite. Pese a esto, hasta el día de hoy existen ciertos problemas que no han podido ser resueltos ni con la ayuda de las computadoras, esto se debe a que quizás si se pueda encontrar una respuesta, pero el tiempo que le llevaría a las computadoras darnos el resultado podría ser de hasta millones de años.
 
@@ -22,6 +30,14 @@ Fuente: [Wikipedia - Travelling salesman problem](https://en.wikipedia.org/wiki/
 
 ## Objetivos
 
+• Desarrollar la competencia general de razonamiento cuantitativo y la competencia específica de uso de técnicas y herramientas acorde a los objetivos del curso.
+
+• Desarrollar un algoritmo que permita resolver completa o parcialmente el problema del vendedor viajero.
+
+• Determinar la importancia de la aplicación de algoritmos eficientes a la hora de resolver un problema.
+
+• Analizar la eficiencia y complejidad de los algoritmos planteados.
+
 ## Marco Teorico
 
 ### Algoritmo de Prim
@@ -39,9 +55,9 @@ El resultado de ejecutar el algoritmo de Prim es un arbol de expansion minima, d
 
 #### Complejidad
 
-El algoritmo de Prim puede ver medida su complejidad algoritmica según su complejidad temporal como:
+El bucle principal se. ejecuta n- 1 veces, en cada iteración cada bucle interior toma O(n), por lo tanto el tiempo de ejecución del algoritmo de PRIM toma O(n^2 ) . 
 
--O (n^2). Siendo n el número de vértices del grafo.
+
 
 
 ### Algoritmo Kruskal
@@ -68,6 +84,24 @@ Como se explicó al inicio este método me permite unir 2 componentes conexas, e
 #### Funcionamiento Kruskal
 
 Primeramente ordenaremos las aristas del grafo por su peso de menor a mayor. Mediante la técnica greedy Kruskal intentara unir cada arista siempre y cuando no se forme un ciclo, ello se realizará mediante los metodos Union-Find. Como hemos ordenado las aristas por peso comenzaremos con la arista de menor peso, si los vértices que contienen dicha arista no están en la misma componente conexa  entonces los unimos para formar una sola componente mediante Union.
+
+#### Complejidad
+
+La complejidad se puede analizar contemplando lo siguiente:
+
+• Se tiene una complejidad de O(a*log(a)) para ordenar los arcos, el cual es equivalente a O(a*log(a)), como n- 1 <=  a <=    n(n- 1)/2
+
+• Se tiene una complejidad de O( n) al inicializar los n conjuntos disjuntos
+
+• Se tiene una complejidad de 0((2a- 1)log*n para todas las búsquedas
+
+Considerando que:
+
+K llamadas a operaciones buscar el líder del conjunto que contiene a un vértice de conjuntos disjuntos den elementos lleva un tiempo de O(Klog*n).
+
+log*n E O(logn), pero logn ~ O(log*n).
+
+Por lo tanto podemos concluir que la complejidad del algoritmo de Kruskal es O(a*log(n)). 
 
 ## Experimentación
 
@@ -172,6 +206,74 @@ Estos fueron los resultados obtenidos durante la experimentación:
  - [ ] Aplicar su solución a los 143’351 centros poblados restantes
 No fue posible aplicar este algoritmo en un tiempo razonable para dicha muestra.
 
+### Solución 2: Aplicando el algoritmo de Prim
+
+Para la solucion 2 se utilizo el algoritmo Prim:
+
+En primer lugar se crearon diccionarios para las distancias, padres y visitados. Luego se creo un arreglo vacio y en él se agregaron las distancias y los vertices.
+```python 
+def prim(G,centrosPoblados,inicio = 0):
+    #lista de aristas
+    resultado = []
+
+    dist = {}
+    for cep in centrosPoblados:
+        dist[cep.codigo] = math.inf
+    padres = {}
+    for cep in centrosPoblados:
+        padres[cep.codigo] = ''
+    visitados = {}
+    for cep in centrosPoblados:
+        visitados[cep.codigo] = False
+    q = []
+    hq.heappush(q, (0,centrosPoblados[inicio].codigo))
+```
+Luego se implemento el algoritmo Prim, donde se retorna un grafo de padres, distancias y el grafo resultante.
+```python 
+	while len(q) > 0:
+        _,u = hq.heappop(q)
+        if not visitados[u]:
+            visitados[u] = True
+            for w,v in G[u]:
+                if not visitados[v] and w < dist[v]:
+                    dist[v] = w
+                    padres[v] = u
+                    resultado.append((u,v))
+                    hq.heappush(q, (w,v))
+    return padres,dist,resultado
+```
+Finalmente se uso el algoritmo para una muestra:
+
+```python 
+    centrosPoblados = leerDataSet("dataset.csv",1)
+    tipoMuestra = {
+        'RESTANTES':0,
+        'DEPARTAMENTALES':1,
+        'PROVINCIALES':2,
+        'DISTRITALES':3
+    }
+    muestra = []
+    for cep in centrosPoblados:
+        if cep.capital == tipoMuestra['DEPARTAMENTALES']:
+            muestra.append(cep)
+    grafo = generarGrafo(muestra)
+    padres,distancias,resultado = prim(grafo,muestra)
+    print(resultado)
+
+```
+
+##### Resultados
+Estos fueron los resultados obtenidos durante la experimentación:
+
+ - [x] Aplicar su solución a las 25 capitales departamentales.
+ ![Prueba en departamentales](https://i.imgur.com/CTsenrt.png)
+ - [x] Aplicar su solución a las 171 capitales provinciales
+ ![Prueba en provinciales](https://i.imgur.com/ygLlsv5.png)
+ - [x] Aplicar su solución a las 1’678 capitales distritales.
+ ![Prueba en distritales](https://i.imgur.com/g3fTA3D.png)
+ - [ ] Aplicar su solución a los 143’351 centros poblados restantes
+No fue posible aplicar este algoritmo en un tiempo razonable para dicha muestra.
+
 ### Algoritmo Floyd-Warshall
 
 Fue descrito por primera vez por Bernard Roy en 1959, se trata de un algoritmo de análisis sobre grafos para encontrar el camino minimo en grafos dirigidos. Este algoritmo encuentra el mejor camino de todos los pares de vertices en una sola ejecución y es un claro ejemplo de programación dinamica.
@@ -194,6 +296,19 @@ Se define un grafo G con vertices V numerados de 1 a N, y una funcion CaminoMini
 
 Una vez definido esto, se pueden presentar dos posibles situaciones; el camino minimo se puede hallar directamente mediante la funcion CaminoMinimo(i, j, k) y se halla comprendido entre los vertices 1 a k+1; o se encuentra como el camino minimo de k+1 a j, por lo cual se debiesen de concatenar dos caminos minimos para formar el más optimo.
 
+### Complejidad de Floyd-Warshall
+
+La complejidad de este algoritmo es O(n^3) . El algoritmo resuelve eficientemente la búsqueda de todos los caminos más cortos entre cualesquiera nodos. Sin embargo, la busqueda se vuelve lento
+
+## Conclusiones
+
+Finalmente, se puede concluir que al momento de la ejecucion de los algoritmos Prim y Kruskal:
+
+• Ambos algoritmos se pudieron ejecutar de manera satisfactoria y rapida para las muestras de Departamentos, Provincias y Distrital
+
+• Si se ejecutara el algoritmo para las muestras restantes, es decir para todos los centros poblados, se mostraria los resultados adecuados. Sin embargo, el tiempo de ejecucion seria muy extenso, lo cual no es lo mas optimo.
+	
+
 ## Bibliografia:
 
 Complejidad Algoritmica(2016) Algoritmo de Prim (Recuperado de: https://sites.google.com/site/complejidadalgoritmicaes/prim) 
@@ -210,4 +325,8 @@ II, E. d. Algoritmo de Floyd-Warshall. Obtenido de https://estructurasite.wordpr
 
 Wikipedia. Algoritmo de Floyd-Warshall. Obtenido de https://es.wikipedia.org/wiki/Algoritmo_de_Floyd-Warshall (fecha de consulta: 18 de noviembre de 2018)
 
+Tocto, P (2012) Comparacion algoritmo Prim y Kruskal(Recuperado de: http://cybertesis.uni.edu.pe/bitstream/uni/3416/1/tocto_ip.pdf)
+(fecha de consulta: 18 de noviembre de 2018)
 
+Herrera, S.(2014) Eficiencia algorítmica en aplicaciones de grafos orientadas
+a redes GMPLS (Recuperado de: http://www.scielo.org.co/pdf/rfing/v23n36/v23n36a09.pdf) (fecha de consulta: 18 de noviembre de 2018)
