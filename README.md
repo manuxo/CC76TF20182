@@ -192,19 +192,58 @@ No fue posible aplicar este algoritmo en un tiempo razonable para dicha muestra.
 
 ### Solución 2: Aplicando el algoritmo de Prim
 
-Utilice el algoritmo....
+Para la solucion 2 se utilizo el algoritmo Prim:
 
-Primero hice esto:
+En primer lugar se crearon diccionarios para las distancias, padres y visitados. Luego se creo un arreglo vacio y en él se agregaron las distancias y los vertices.
 ```python 
-	Inserta tu codigo aca
-	def funcion(parametro):
-		bla bla bla
+def prim(G,centrosPoblados,inicio = 0):
+    #lista de aristas
+    resultado = []
+
+    dist = {}
+    for cep in centrosPoblados:
+        dist[cep.codigo] = math.inf
+    padres = {}
+    for cep in centrosPoblados:
+        padres[cep.codigo] = ''
+    visitados = {}
+    for cep in centrosPoblados:
+        visitados[cep.codigo] = False
+    q = []
+    hq.heappush(q, (0,centrosPoblados[inicio].codigo))
 ```
-Luego hice esto:
+Luego se implemento el algoritmo Prim, donde se retorna un grafo de padres, distancias y el grafo resultante.
 ```python 
-	Inserta tu codigo aca
-	def funcion(parametro):
-		bla bla bla
+	while len(q) > 0:
+        _,u = hq.heappop(q)
+        if not visitados[u]:
+            visitados[u] = True
+            for w,v in G[u]:
+                if not visitados[v] and w < dist[v]:
+                    dist[v] = w
+                    padres[v] = u
+                    resultado.append((u,v))
+                    hq.heappush(q, (w,v))
+    return padres,dist,resultado
+```
+Finalmente se uso el algoritmo para una muestra:
+
+```python 
+    centrosPoblados = leerDataSet("dataset.csv",1)
+    tipoMuestra = {
+        'RESTANTES':0,
+        'DEPARTAMENTALES':1,
+        'PROVINCIALES':2,
+        'DISTRITALES':3
+    }
+    muestra = []
+    for cep in centrosPoblados:
+        if cep.capital == tipoMuestra['DEPARTAMENTALES']:
+            muestra.append(cep)
+    grafo = generarGrafo(muestra)
+    padres,distancias,resultado = prim(grafo,muestra)
+    print(resultado)
+
 ```
 
 ##### Resultados
@@ -244,6 +283,14 @@ Una vez definido esto, se pueden presentar dos posibles situaciones; el camino m
 ### Complejidad de Floyd-Warshall
 
 La complejidad de este algoritmo es O(n^3) . El algoritmo resuelve eficientemente la búsqueda de todos los caminos más cortos entre cualesquiera nodos. Sin embargo, la busqueda se vuelve lento
+
+## Conclusiones
+
+Finalmente, se puede concluir que al momento de la ejecucion de los algoritmos Prim y Kruskal:
+
+	- Ambos algoritmos se pudieron ejecutar de manera satisfactoria y rapida para las muestras de Departamentos, Provincias y 		Distrital
+	- Si se ejecutara el algoritmo para las muestras restantes, es decir para todos los centros poblados, se mostraria los			 resultados adecuados. Sin embargo, el tiempo de ejecucion seria muy extenso, lo cual no es lo mas optimo.
+	
 
 ## Bibliografia:
 
