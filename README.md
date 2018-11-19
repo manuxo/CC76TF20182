@@ -1,6 +1,12 @@
 # CC76TF20182
 Trabajo final para el curso de Complejidad Algorítmica. UPC - Universidad Peruana de Ciencias Aplicadas
 
+Integrantes: 
+
+• Alvarado Estanga, Manuel
+• Bernal Marchena, Luis Angel
+• Galarza Rosales, Pablo J.
+
 ## Introducción
 A lo largo de la existencia de las computadoras, se ha considerado a estas como herramientas de las cuales nos podemos valer para facilitar nuestras actividades. Así, se ha pensado que las computadoras nos pueden ayudar a resolver todos nuestros problemas y que poseen más poder para procesar datos que nosotros. Es raro pensar en que las computadoras poseen limites en sus facultades de cálculo, ya que muy pocas veces nos encontramos ante tales limites; de hecho, probablemente el usuario promedio no tenga que lidiar nunca en su vida con ningún problema que requiera llevar el poder de procesamiento de la computadora hasta casi el límite. Pese a esto, hasta el día de hoy existen ciertos problemas que no han podido ser resueltos ni con la ayuda de las computadoras, esto se debe a que quizás si se pueda encontrar una respuesta, pero el tiempo que le llevaría a las computadoras darnos el resultado podría ser de hasta millones de años.
 
@@ -22,6 +28,14 @@ Fuente: [Wikipedia - Travelling salesman problem](https://en.wikipedia.org/wiki/
 
 ## Objetivos
 
+• esarrollar la competencia general de razonamiento cuantitativo y la competencia específica de uso de técnicas y herramientas acorde a los objetivos del curso.
+
+• Desarrollar un algoritmo que permita resolver completa o parcialmente el problema del vendedor viajero.
+
+• Determinar la importancia de la aplicación de algoritmos eficientes a la hora de resolver un problema.
+
+• Analizar la eficiencia y complejidad de los algoritmos planteados.
+
 ## Marco Teorico
 
 ### Algoritmo de Prim
@@ -39,7 +53,7 @@ El resultado de ejecutar el algoritmo de Prim es un arbol de expansion minima, d
 
 #### Complejidad
 
-El bucle principal se. ejecuta n- 1 veces, en cada iteración cada bucle interior toma O(n), por lo tanto el tiempo de ejecución del algoritmo de PRIM toma O(n2 ) . 
+El bucle principal se. ejecuta n- 1 veces, en cada iteración cada bucle interior toma O(n), por lo tanto el tiempo de ejecución del algoritmo de PRIM toma O(n^2 ) . 
 
 
 
@@ -73,7 +87,7 @@ Primeramente ordenaremos las aristas del grafo por su peso de menor a mayor. Med
 
 La complejidad se puede analizar contemplando lo siguiente:
 
-• Se tiene una complejidad de O(aloga) para ordenar los arcos, el cual es equivalente a O(a*log(a)), como n- 1 <=  a <= n(n- 1)/2
+• Se tiene una complejidad de O(a*log(a)) para ordenar los arcos, el cual es equivalente a O(a*log(a)), como n- 1 <=  a <=    n(n- 1)/2
 
 • Se tiene una complejidad de O( n) al inicializar los n conjuntos disjuntos
 
@@ -288,8 +302,8 @@ La complejidad de este algoritmo es O(n^3) . El algoritmo resuelve eficientement
 
 Finalmente, se puede concluir que al momento de la ejecucion de los algoritmos Prim y Kruskal:
 
-	- Ambos algoritmos se pudieron ejecutar de manera satisfactoria y rapida para las muestras de Departamentos, Provincias y 		Distrital
-	- Si se ejecutara el algoritmo para las muestras restantes, es decir para todos los centros poblados, se mostraria los			 resultados adecuados. Sin embargo, el tiempo de ejecucion seria muy extenso, lo cual no es lo mas optimo.
+• Ambos algoritmos se pudieron ejecutar de manera satisfactoria y rapida para las muestras de Departamentos, Provincias y Distrital
+• Si se ejecutara el algoritmo para las muestras restantes, es decir para todos los centros poblados, se mostraria los resultados adecuados. Sin embargo, el tiempo de ejecucion seria muy extenso, lo cual no es lo mas optimo.
 	
 
 ## Bibliografia:
