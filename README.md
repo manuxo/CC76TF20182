@@ -190,7 +190,7 @@ Estos fueron los resultados obtenidos durante la experimentación:
  - [ ] Aplicar su solución a los 143’351 centros poblados restantes
 No fue posible aplicar este algoritmo en un tiempo razonable para dicha muestra.
 
-#### Solución 2: Aplicando el algoritmo de Prim
+### Solución 2: Aplicando el algoritmo de Prim
 
 Utilice el algoritmo....
 
