@@ -7,7 +7,20 @@ from Leer import leerDataSet,leerArchivo
 from generarGrafo import generarGrafo
 from itertools import groupby
 
+def construirCamino(maPadres, inicio, fin, d):
+    inicio,fin = int(inicio), int(fin)
+    if(inicio==fin):
+        d.append(inicio)
+    elif(maPadres[inicio][fin] == -1):
+        print("No existe camino")
+        return
+    else:
+        construirCamino(maPadres, inicio, maPadres[inicio][fin], d);
+        d.append(fin)
+        
+    return d
 
+"""
 def camino(maPadres, inicio, fin):
     d=[]
     d.append(inicio)
@@ -33,6 +46,7 @@ def camino(maPadres, inicio, fin):
     return d
 
 
+"""
 
 def transformar(uCodigos, buscado):
     n=len(uCodigos)
@@ -44,12 +58,13 @@ def transformar(uCodigos, buscado):
     
 def creandoArbol(maPadres, uCodigos):
     resultado=[]
-    d=camino(maPadres, 0, 1)
-    n=len(d)
+    camino=[]
+    construirCamino(maPadres, 0, 1,camino)
+    n=len(camino)
     for u in range(n):
-        nodo=transformar(uCodigos, d[u])
+        nodo=transformar(uCodigos, camino[u])
         if u+1!=n:
-            vecino=transformar(uCodigos, d[u+1])
+            vecino=transformar(uCodigos, camino[u+1])
             resultado.append((0,nodo,vecino))
         else:
             resultado.append((0,nodo,nodo))
@@ -151,15 +166,17 @@ if __name__ == "__main__":
     G, uCodigos = generarGrafoFloyd(muestra)
     tamano=len(muestra)
     #print(G)
-<<<<<<< HEAD
+
     caminoFloyd = floydWarshall(G, tamano)
     #print(caminoFloyd)
-    #print(len(caminoFloyd))
+
+    camino=[]
+    construirCamino(caminoFloyd, 0, 23,camino)
+    print(camino)
     """
-=======
     caminoFloyd = floydWarshall(G)
     print(caminoFloyd)
->>>>>>> b25ade3da97165381945394a26fb5db0455e92a6
+
     #Config mapa
     plt.figure(figsize=(15,5))
     plt.title("Mapa")
@@ -172,7 +189,7 @@ if __name__ == "__main__":
         x.append(cep.coordX)
         y.append(cep.coordY)
     plt.plot(x,y,'ro')
-    """
+
     def buscarCentroPoblado(codigo):
         for cep in centrosPoblados:
             if cep.codigo == codigo:
@@ -196,9 +213,9 @@ if __name__ == "__main__":
     """
     #print(G)
     #print(caminoFloyd)
-    destinos=camino(caminoFloyd, 1, 2)
-    print(destinos)
-    plt.show()
+    #destinos=camino(caminoFloyd, 1, 2)
+    #print(destinos)
+    #plt.show()
 
     
    
