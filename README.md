@@ -305,6 +305,7 @@ La complejidad de este algoritmo es O(n^3) . El algoritmo resuelve eficientement
 Finalmente, se puede concluir que al momento de la ejecucion de los algoritmos Prim y Kruskal:
 
 • Ambos algoritmos se pudieron ejecutar de manera satisfactoria y rapida para las muestras de Departamentos, Provincias y Distrital
+
 • Si se ejecutara el algoritmo para las muestras restantes, es decir para todos los centros poblados, se mostraria los resultados adecuados. Sin embargo, el tiempo de ejecucion seria muy extenso, lo cual no es lo mas optimo.
 	
 
