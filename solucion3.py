@@ -20,54 +20,34 @@ def construirCamino(maPadres, inicio, fin, d):
         
     return d
 
-"""
-def camino(maPadres, inicio, fin):
-    d=[]
-    d.append(inicio)
-    while(maPadres[inicio][fin]!=inicio):
-        if maPadres[inicio][fin]==-1:
-            print('No existe tal camino')
-            n=len(d)
-            for u in range(n):
-                d.pop()
-            break
-        d.append(maPadres[inicio][fin])
-        tmpfin=maPadres[inicio][fin]
-        tmpinicio=inicio
-        while(maPadres[tmpinicio][tmpfin]!=tmpinicio):
-            d.append(maPadres[tmpinicio][tmpfin])
-            inicio=maPadres[tmpinicio][tmpfin]
-        inicio=maPadres[inicio][fin]
-        
-    d.append(fin)
-    if maPadres[inicio][fin]==-1:
-        d.pop()
-    
-    return d
-
-
-"""
-
 def transformar(uCodigos, buscado):
     n=len(uCodigos)
-    for nro, nodo in uCodigos:
-        if nro==buscado:
-            return nodo
+
+    nros=[x[0] for x in uCodigos]
+    nodos=[x[1] for x in uCodigos]
+    for u in range(0, n):
+        if nros[u]==buscado:
+            return nodos[u]
         else:
-            return 0
+            continue
+    return -1
+
     
-def creandoArbol(maPadres, uCodigos):
+def creandoArbol(maPadres, uCodigos, inicio, fin):
     resultado=[]
     camino=[]
-    construirCamino(maPadres, 0, 1,camino)
+    construirCamino(maPadres, inicio, fin, camino)
+    print(camino)
     n=len(camino)
+    primerNodo=-1
     for u in range(n):
         nodo=transformar(uCodigos, camino[u])
+        if u==0: primerNodo=nodo
         if u+1!=n:
             vecino=transformar(uCodigos, camino[u+1])
             resultado.append((0,nodo,vecino))
         else:
-            resultado.append((0,nodo,nodo))
+            resultado.append((0,nodo,primerNodo))
             
     return resultado
 
@@ -164,18 +144,20 @@ if __name__ == "__main__":
             muestra.append(cep)
             
     G, uCodigos = generarGrafoFloyd(muestra)
+    Gmapa=generarGrafo(muestra)
     tamano=len(muestra)
     #print(G)
 
     caminoFloyd = floydWarshall(G, tamano)
     #print(caminoFloyd)
 
-    camino=[]
-    construirCamino(caminoFloyd, 0, 23,camino)
-    print(camino)
-    """
-    caminoFloyd = floydWarshall(G)
-    print(caminoFloyd)
+    #camino=[]
+    #construirCamino(caminoFloyd, 0, 23,camino)
+    
+    arbol=creandoArbol(caminoFloyd, uCodigos, 0, 3)
+    #print(arbol)
+
+
 
     #Config mapa
     plt.figure(figsize=(15,5))
@@ -201,21 +183,15 @@ if __name__ == "__main__":
             _,origen,destino = arista
             o = buscarCentroPoblado(origen)
             d = buscarCentroPoblado(destino)
-            x = [o.coordX,d.coordX]
-            y = [o.coordY,d.coordY]
-            plt.plot(x,y,color=color,marker="8",markerEdgeColor="black")
-  
+            if o!=None and d!=None:
+                x = [o.coordX,d.coordX]
+                y = [o.coordY,d.coordY]
+                plt.plot(x,y,color=color,marker="8",markerEdgeColor="black")
 
     #Pintar grafo
-        pintarAristas(G,"blue")
-        #Pintar arbol de expansion minima
-        pintarAristas(arbolExpMin,"white")
-    """
-    #print(G)
-    #print(caminoFloyd)
-    #destinos=camino(caminoFloyd, 1, 2)
-    #print(destinos)
-    #plt.show()
-
+    pintarAristas(Gmapa,"blue")
+    #Pintar arbol de expansion minima
+    pintarAristas(arbol,"white")
+    plt.show()
     
    
