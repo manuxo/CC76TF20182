@@ -4,7 +4,9 @@ Trabajo final para el curso de Complejidad Algorítmica. UPC - Universidad Perua
 Integrantes: 
 
 • Alvarado Estanga, Manuel
+
 • Bernal Marchena, Luis Angel
+
 • Galarza Rosales, Pablo J.
 
 ## Introducción
@@ -28,7 +30,7 @@ Fuente: [Wikipedia - Travelling salesman problem](https://en.wikipedia.org/wiki/
 
 ## Objetivos
 
-• esarrollar la competencia general de razonamiento cuantitativo y la competencia específica de uso de técnicas y herramientas acorde a los objetivos del curso.
+• Desarrollar la competencia general de razonamiento cuantitativo y la competencia específica de uso de técnicas y herramientas acorde a los objetivos del curso.
 
 • Desarrollar un algoritmo que permita resolver completa o parcialmente el problema del vendedor viajero.
 
