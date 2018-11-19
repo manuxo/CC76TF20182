@@ -5,6 +5,7 @@ import math
 import matplotlib.pyplot as plt
 from Leer import leerDataSet,leerArchivo
 from generarGrafo import generarGrafo
+from itertools import groupby
 
 
 def camino(maPadres, inicio, fin):
@@ -56,14 +57,13 @@ def creandoArbol(maPadres, uCodigos):
     return resultado
 
 
-def floydWarshall(G):
-    tamano = len(G)
-    print(tamano)
+def floydWarshall(G, tamano):
+    n=len(G)
     maCostos = [[math.inf]*tamano for _ in range(tamano)]
     maPadres = [[-1]*tamano for _ in range(tamano)]
-    for nodo in range(tamano):
-        maCostos[nodo][nodo] = 0
-        for distancia, nodo, vecino in G[nodo]:
+    for nodos in range(n):
+        for distancia, nodo, vecino in G[nodos]:
+            maCostos[nodo][nodo] = 0
             maCostos[nodo][vecino] = distancia
             maPadres[nodo][vecino] = nodo
             
@@ -90,16 +90,11 @@ def buscar(uCodigos, vecino):
     return -1
         
 def repetidos(r):
-    n=len(r)
-    norep=[]
-    flag=[]
-    for u in range(n):
-        flag.append(0)
-        if flag[u]==0:
-            norep.append(r[u])
-        for v in range(1, n):
-            if r[u]==r[v]:
-                flag.append(1)
+    
+    norep = []
+    for x in r:
+        if x not in norep:
+            norep.append(x)
             
     return norep
                 
@@ -115,6 +110,7 @@ def generarGrafoFloyd(muestra):
         r.append(int(nodo))
         
     norep=repetidos(r)
+
 
     uCodigos=[]
     for nodo in norep:
@@ -153,10 +149,13 @@ if __name__ == "__main__":
         if cep.capital == tipoMuestra['DEPARTAMENTALES']: #es capital departamental
             id[cep.codigo] = cep.codigo
             muestra.append(cep)
+            
     G, uCodigos = generarGrafoFloyd(muestra)
+    tamano=len(muestra)
     #print(G)
-    caminoFloyd = floydWarshall(G)
+    caminoFloyd = floydWarshall(G, tamano)
     #print(caminoFloyd)
+    #print(len(caminoFloyd))
     """
     #Config mapa
     plt.figure(figsize=(15,5))
